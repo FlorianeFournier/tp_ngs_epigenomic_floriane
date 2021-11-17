@@ -3,5 +3,6 @@
 .RData
 .Ruserdata
 *.Rproj
-*.Script
-*.README
+Data/*
+Results/*
+Process_data/*
