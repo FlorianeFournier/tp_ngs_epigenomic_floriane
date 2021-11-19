@@ -12,3 +12,4 @@ multiqc_data/*
 multiqc_data_1/*
 Fastqc_trim/*
 Trim/*
+Mapping/*
