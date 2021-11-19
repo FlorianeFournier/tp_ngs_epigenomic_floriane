@@ -24,7 +24,7 @@ done
 for bamfile in Mapping/*bam
 do
   samtools index ${bamfile}
-  samtools idstats ${bamfile}
+  samtools idxstats ${bamfile}
 
 done
 

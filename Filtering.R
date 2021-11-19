@@ -13,3 +13,18 @@ do
     M=${mapfile/".bam"/"marked_dup_metics.txt"}
 
 done
+
+
+#enlever les régions filtré
+
+grep -v -E "Mt|Pt" Genoms_informations/TAIR10_selectedRegions.bed > TAIR10_selectedRegions_Mt_Pt.bed #toutes les lignes sauf Pt et Mt donc sans ADN mito + chloro
+mv *TAIR10* Genoms_informations/
+  
+
+
+for mapfile in Mapping/*duplicated.bam
+do
+  samtools view -b ${mapfile} -o ${mapfile/".bam"/"filtered.bam"} \
+  -L Genoms_informations/TAIR10_selectedRegions_Mt_Pt.bed \
+  -F 1024 -f 3 -q 30
+done
