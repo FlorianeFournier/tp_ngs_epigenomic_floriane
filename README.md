@@ -46,3 +46,8 @@ Création de l'index: Utilisation de la fonction bowtie2-build en prenant en arg
 Mapping des données en comparaison du génome de référence: Utilisation d'un boucle avec comme fonction bowtie2. Bowtie map chacun des reads sur le génome de référence de A.thaliana. On a donc une ligne par read dans le fichier de sortie. 
 En sorti on a un fichier sam que l'on va compresser ensuite en un fichier bam. Pour cela, on demande de sortir le fichier sam dans l'outil tools ce qui va permettre de prendre le fichier sam et d'en resortir un fichier bam. 
 On trie les reads.
+
+Etape 7: Filtering Script Filtering.R
+
+Le filtering permet d'enlever le genome non chromosomique, les reads qui n'ont pas mapper, les reds de mauvaise qualité de mapping, les régions blacklistés et les reads dupliqués.
+Pour cela on utilise la région samtools
