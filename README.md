@@ -88,3 +88,4 @@ Utiliser la fonction bedtools closest en faisant attention à ne pas prendre io 
 
 On compare où sont la peak entre les racines entière et les cellules quiescentes et donc les zones d'accessibilité
 On prend en argument les données des cellules quescentes et celles des racines et on fait la différence entre les deux en utilisant la fonction bedtools intersect
+en donné on a les peaks qui sont uniquement présent chez les cellules quiescentes 
