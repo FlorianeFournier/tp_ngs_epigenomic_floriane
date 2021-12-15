@@ -75,3 +75,15 @@ On refais la même chose pour les jeux de données que l'on a
 
 On commence par indexer les sequences
 on utilise la fonction masc2 callpeak pour déterminer les peaks 
+
+
+
+*Etape 10: Associer les peaks aux genes Script closest.sh
+
+Utiliser la fonction bedtools closest en faisant attention à ne pas prendre io dans les arguments. 
+
+
+
+Etape 11 : Comparer la localisation des peaks Script comparaison_racine_cellule.sh
+
+On compare où sont la peak entre les racines entière et les cellules quiescentes
