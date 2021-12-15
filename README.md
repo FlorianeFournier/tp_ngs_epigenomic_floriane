@@ -47,9 +47,24 @@ Mapping des données en comparaison du génome de référence: Utilisation d'un 
 En sorti on a un fichier sam que l'on va compresser ensuite en un fichier bam. Pour cela, on demande de sortir le fichier sam dans l'outil tools ce qui va permettre de prendre le fichier sam et d'en resortir un fichier bam. 
 On trie les reads.
 
+
+
 *Etape 7: Filtering Script Filtering.R
 
 Le filtering permet d'enlever le genome non chromosomique, les reads qui n'ont pas mapper, les reds de mauvaise qualité de mapping, les régions blacklistés et les reads dupliqués.
 On commence par marquer les duplicats en utilisant MarkDuplicates
 On exclue ensuite les régions du genome mitochondrial et chloroplastique pour cela on utilise grep -v pour dire que l'on garde tout sauf les régions (-E pour mettre 2 éléments)
 Ensuite on utilise samtools view pour ouvrir les fichier bam et on utilise -L pour afficher les reads mapper que dans des régions que l'on a spécifié puis on filtre les flags dans les séquences avec F et f et q : F pour exclure 1024: duplicat de PCR et f : inclure 3: reads pairé  et q pour la qualité.
+
+
+
+*Etape 8: Controle qualité après le filtering Script Qualite_post_filtering.R
+
+On commence à changer les valeurs des variables 
+On définit ensuite les régions d'intérêt, pour cela, creation d'un fichier avec tous les intervals de 1000 autour de TSS, définition des TSS enlever mitochondrie + chroloplaste, garder les genes codant pour des proteines et extraire l'index du premier caractère et du dernier caractère du gene, une fois que l'on a extrait le nom, on regarde le sens du gène. on définit enfin les intersections entre les régions d'intérêt et les TSS
+
+On détermine ensuite les coordonnées dans la séquence et les read qui match
+
+On calcul la distance entre deux reads
+
+On refais la même chose pour les jeux de données que l'on a 
