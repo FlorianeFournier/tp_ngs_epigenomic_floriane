@@ -14,5 +14,8 @@ Fastqc_trim/*
 Trim/*
 Mapping/*
 Peakcalling/*
+Annotations/*
+.nearest.genes.txt*
+Peakcalling/files/*
 
 Mapping/*
