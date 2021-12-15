@@ -52,4 +52,4 @@ On trie les reads.
 Le filtering permet d'enlever le genome non chromosomique, les reads qui n'ont pas mapper, les reds de mauvaise qualité de mapping, les régions blacklistés et les reads dupliqués.
 On commence par marquer les duplicats en utilisant MarkDuplicates
 On exclue ensuite les régions du genome mitochondrial et chloroplastique pour cela on utilise grep -v pour dire que l'on garde tout sauf les régions (-E pour mettre 2 éléments)
-Ensuite on utilise samtools view pour ouvrir les fichier bam et on utilise -L pour afficher les reads mapper que dans des régions que l'on a spécifié puis on filtre les flags dans les séquences avec F et f et q : F pour exclure 1024: duplicat de PCR et f : inclure 3: reads pairé  et q pour la qualité
+Ensuite on utilise samtools view pour ouvrir les fichier bam et on utilise -L pour afficher les reads mapper que dans des régions que l'on a spécifié puis on filtre les flags dans les séquences avec F et f et q : F pour exclure 1024: duplicat de PCR et f : inclure 3: reads pairé  et q pour la qualité.
