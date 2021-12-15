@@ -58,7 +58,7 @@ Ensuite on utilise samtools view pour ouvrir les fichier bam et on utilise -L po
 
 
 
-*Etape 8: Controle qualité après le filtering Script Qualite_post_filtering.R
+*Etape 8: Controle qualité après le filtering Script Qualite_post_filtering.sh
 
 On commence à changer les valeurs des variables 
 On définit ensuite les régions d'intérêt, pour cela, creation d'un fichier avec tous les intervals de 1000 autour de TSS, définition des TSS enlever mitochondrie + chroloplaste, garder les genes codant pour des proteines et extraire l'index du premier caractère et du dernier caractère du gene, une fois que l'on a extrait le nom, on regarde le sens du gène. on définit enfin les intersections entre les régions d'intérêt et les TSS
@@ -68,3 +68,10 @@ On détermine ensuite les coordonnées dans la séquence et les read qui match
 On calcul la distance entre deux reads
 
 On refais la même chose pour les jeux de données que l'on a 
+
+
+
+*Etape 9: Determiner les peak Script peak_calling.sh
+
+On commence par indexer les sequences
+on utilise la fonction masc2 callpeak pour déterminer les peaks 
