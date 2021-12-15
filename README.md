@@ -84,6 +84,7 @@ Utiliser la fonction bedtools closest en faisant attention à ne pas prendre io 
 
 
 
-Etape 11 : Comparer la localisation des peaks Script comparaison_racine_cellule.sh
+*Etape 11: Comparer la localisation des peaks Script comparaison_racine_cellule.sh
 
-On compare où sont la peak entre les racines entière et les cellules quiescentes
+On compare où sont la peak entre les racines entière et les cellules quiescentes et donc les zones d'accessibilité
+On prend en argument les données des cellules quescentes et celles des racines et on fait la différence entre les deux en utilisant la fonction bedtools intersect
