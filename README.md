@@ -100,10 +100,11 @@ Utilisation de la fonction bedtools merge
 *Etape 12: Déterminer les peaks en commun chez plus de deux échantillons Script Commun_peak.R
 
 On considère uniquement les données où les peaks sont présent au moins chez deux des trois échantillons. 
-Pour ce faire on utilise la fonction write table
+Pour ce faire on utilise la fonction write table en prenant comme contrainte le fait que V5 doit être sup ou égale à 2
 
 
 
-*Etape 13: Annotations des gènes où il y des peaks 
+*Etape 13: Annotations des gènes où il y des peaks commun SCript distance_zero.R
 
-Pour cela on considère les gènes uniquement quand la distance du peak est de 0 par rapport à celle des gènes
+Pour cela on considère les gènes uniquement quand la distance du peak est de 0 par rapport à celle des gènes pour exclure les peaks des régions intergénique
+Pour cela on utilise bedtools closest pour déterminer la distance entre les gènes et les peaks dans les données où il y a des peaks dans au moins 2 échantillons. Puis on extraire UNIQUEMENT les peaks associés à des gènes avec une distance de zero en considerant write table et en prenant comme contrainte le fait que V11 doit être égale à 0
