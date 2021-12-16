@@ -91,3 +91,19 @@ Utiliser la fonction bedtools closest en faisant attention à ne pas prendre io 
 On compare où sont la peak entre les racines entière et les cellules quiescentes et donc les zones d'accessibilité
 On prend en argument les données des cellules quescentes et celles des racines et on fait la différence entre les deux en utilisant la fonction bedtools intersect
 en donné on a les peaks qui sont uniquement présent chez les cellules quiescentes 
+
+Création d'un fichier avec tous les peaks uniques aux cellules quiescentes et le nombre de peak en commun chez les 3 échantillons.
+Utilisation de la fonction bedtools merge
+
+
+
+*Etape 12: Déterminer les peaks en commun chez plus de deux échantillons Script Commun_peak.R
+
+On considère uniquement les données où les peaks sont présent au moins chez deux des trois échantillons. 
+Pour ce faire on utilise la fonction write table
+
+
+
+*Etape 13: Annotations des gènes où il y des peaks 
+
+Pour cela on considère les gènes uniquement quand la distance du peak est de 0 par rapport à celle des gènes
