@@ -10,4 +10,5 @@ mv *Mapping* Script/
 mv *peak_calling* Script/
 mv *qualite_post_filtering* Script/
 mv *Triming* Script/
-  
+mv *Commun_peak* Script/
+mv *distance-zero* Script/
