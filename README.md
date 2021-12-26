@@ -3,6 +3,7 @@
 Floriane FOURNIER
 
 
+
 ## Contexte biologique 
 
 Le développement des organismes multicellulaire passe par une differentiation des cellules souches en fonction de contraintes spaciales et temporelles. Dans ce projet, nous avons étudié cela chez la racine Arabidopsis Thaliana.
@@ -10,6 +11,7 @@ Le développement des organismes multicellulaire passe par une differentiation d
 La racine d'A.Thaliana présente 5 cellules quiescentes localisées dans le centre quiescent de la racine. C'est le pool de cellules indiférenciées de la racine qui peut possèder de ce fait un épigénome différent de celui de celui du reste des cellules de la racine.
 
 Le projet porte sur la détermination et la comparaison de l'épigénome des cellules différenciées de la racine et des cellules quiescentes de la racine afin d'étudier la différence d'accessibilité de certains gènes selon le type cellulaire considéré.
+
 
 
 ## Protocole biologique
@@ -28,60 +30,64 @@ Ces données permettent d'avoir une représentation de l'accessibilité de l'ens
 
 La première étape consiste a télécharger les données de séquençage: racines entières et centres quiescents non publiés mais également des données provenant d'une publication [Combining ATAC-seq with nuclei sorting for discovery of cis-regulatory regions in plant genomes](https://academic.oup.com/nar/article/45/6/e41/2605943). 
 
-Pour télécharger les fichiers brut non publiés, il nous avons utiliser wget selon la forme : wget --user'' password'' adresse. Pour télécharger les fichiers issues de la publication, nous avons utiliser la fonction fastq-dump avec la commande fastq-dump --split-files Nom du fichier
+Pour télécharger les fichiers brut non publiés, il nous avons utiliser [wget](https://doc.ubuntu-fr.org/wget) selon la forme : wget --user'' password'' adresse. Pour télécharger les fichiers issues de la publication, nous avons utiliser la fonction fastq-dump avec la commande fastq-dump --split-files Nom du fichier
 
-Enfin les données sur le génome d'A.Thaliana sont télécharger à partir d'une base de donnée sous le format TAIR grâce à la fonction wget.
+Enfin les données sur le génome d'A.Thaliana sont télécharger à partir d'une [base de donnée](https://plants.ensembl.org/info/data/ftp/index.html) sous le format TAIR grâce à la fonction wget.
 
-Mettre ensuite les données dans le dossier Data (correspondant aux datas brutes): Pour cela on utilise la fonction mv tel que mv quelque chose Data/ On peut pour targeter le quelque chose utiliser *chaine de caractère en commun* 
-
-Pour télécharger les valeurs standards pour A.thaliana: On utilise encore une fois wget lien  On le met ensuite dans Genome_information
-
-Deziper les fastq: Enfin on peut deziper nos données fastq pour cela on utilise la fonction gunzip en mettant gunzip chemin du fichier.
+Mettre ensuite les données dans le dossier Data (correspondant aux datas brutes): Pour cela on utilise la fonction [mv](http://www.commandeslinux.fr/commande-mv/) tel que mv quelque chose Data/
 
 
-
-*Etape 2: Analyse qualité Script analyse_qualite.R
-
-Analyse qualité des données brutes: Utilisation de la fonction fastqc avec cela on peut analyse toutes les datas tel que fastqc Data/*
-
-Déplacer ensuite les données dans le dossier fastqc avec la fonction mv 
-
-Compiler tous les résultats: Utilisation de la fonction multiqc tel que multiqc. permettant de tout analyser
+Enfin on peut deziper nos données fastq pour cela on utilise la fonction [gunzip](https://linuxize.com/post/gunzip-command-in-linux/) qui prend en argument le chemin vers le fichier à deziper.
 
 
 
-*Etape 3: Trimming Script Triming.R
+## Traitement des données
 
-Appeler la fonction Trimmomatic: utilisation de la librairie java
+# Etude de la qualité des reads - analyse.qualite.sh
 
-Trimmer les données: A partir des données de fastq, boucler sur l'ensemble des données afin de déterminer les fichiers unpair et les fichiers trimmed. Pour les expériences Atac on utilise le primer Nextera,  SLIDINGWINDOW:4:15 et MINLEN:25
+Nous avons commencé par analyser la qualité des données brutes. Les données brutes sont sous le format FastQ. Ainsi, la localisation de chaque nucléotide est traduit par une caractère représentant sa qualité. Meilleur la qualité du nucléotide est, plus sa nature est sur.
 
+Pour cela, nous avons utiliser de la fonction [fastqc](https://hbctraining.github.io/Intro-to-rnaseq-hpc-O2/lessons/02_assessing_quality.html) en prenant en argument l'ensemble des données présente dans le fichier Data.
 
-*Etape 4: Analyse qualité des fichiers Trimmed Script analyse_qualite.R
+Les résultats de fastqc sont ensuite compilée. Pour cela, nous avons utilisé de la fonction [multiqc](https://multiqc.info/).
 
-On refait la même chose que à l'étape 2 mais avec cette fois les données issues de l'étape 3. 
-
-
-*Etape 5: Construction d'un index avec le génome de référence Script Mapping.R
-
-Création de l'index: Utilisation de la fonction bowtie2-build en prenant en argument le genome de A.thaliana
+La fonction multiqc renvoie de multiple graphique traduisant la qualité des reads en présence. Ces graphiques traduisent: les statistiques générales, la proportion de reads unique, des histogram de qualité, les scores de qualité de la séquence, le composition en base des séquences, le pourcentage de CG dans la séquence ou encore le niveau de duplication des séquences.
 
 
-*Etape 6: Mapping Script Mapping.R
+# Ellagage des données - Trimming.sh et analyse de la qualité ensuite - analyse_qualite.sh
 
-Mapping des données en comparaison du génome de référence: Utilisation d'un boucle avec comme fonction bowtie2. Bowtie map chacun des reads sur le génome de référence de A.thaliana. On a donc une ligne par read dans le fichier de sortie. 
+Le processus de trimming permet d'enlever des données les séquences de mauvaises qualités ainsi que les séquences des adaptateurs et les duplicats.
+
+Pour faire cela, la fonction [Trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic) est appeler. Attention l'utilisation de cette fonction nécessite de passer par la librairie java. 
+
+A partir des données de fastq, nous avons bouclé sur l'ensemble des données afin de déterminer les fichiers unpair et les fichiers trimmed. Pour les expériences Atac le primer utilisé est Nextera.
+
+On refait la même analyse qualité que à l'étape précédante mais cette fois ci à partir des données trimmer. 
+
+
+# Aligement des reads sur le génome de référence - Mapping.sh
+
+On réalise un mapping qui consiste à comparer les reads avec le genomes de référence pour regarder où sont localisé les reads.
+
+Le mapping est réalisé avec différent outil de la fonction [bowtie2](http://gensoft.pasteur.fr/docs/bowtie2/2.1.0/)
+
+Pour cela, on commence par créer l'index à l'aide de la fonction bowtie2-build en prenant en argument le genome de A.Thaliana.
+
+On réalise ensuite le mapping des données en comparaison du génome de référence. Pour cela, on utilise une boucle avec comme fonction bowtie2. 
+
+Bowtie mappe chacun des reads sur le génome de référence de A.thaliana. On a donc une ligne par read dans le fichier de sortie. 
 En sorti on a un fichier sam que l'on va compresser ensuite en un fichier bam. Pour cela, on demande de sortir le fichier sam dans l'outil tools ce qui va permettre de prendre le fichier sam et d'en resortir un fichier bam. 
-On trie les reads.
+
+On considère qu'un aligement est de bonne qualité à partir de 80% de mapping. Ici nous sommes au dessus de 90%, ce qui nous permet de continuer notre traitement des données l'esprit tranquille quand à la qualité des reads.
 
 
+# Filtration et selection des reads issues du mapping - Filtering.sh
 
-*Etape 7: Filtering Script Filtering.R
+Le filtering permet d'enlever le genome non chromosomique, les reads qui n'ont pas mapper, les reads de mauvaise qualité de mapping, les régions blacklistés et les reads dupliqués. C'est à dire que l'on enlève les reads qui n'ont pas mappés à l'étape précédente.
 
-Le filtering permet d'enlever le genome non chromosomique, les reads qui n'ont pas mapper, les reds de mauvaise qualité de mapping, les régions blacklistés et les reads dupliqués.
-On commence par marquer les duplicats en utilisant MarkDuplicates
-On exclue ensuite les régions du genome mitochondrial et chloroplastique pour cela on utilise grep -v pour dire que l'on garde tout sauf les régions (-E pour mettre 2 éléments)
-Ensuite on utilise samtools view pour ouvrir les fichier bam et on utilise -L pour afficher les reads mapper que dans des régions que l'on a spécifié puis on filtre les flags dans les séquences avec F et f et q : F pour exclure 1024: duplicat de PCR et f : inclure 3: reads pairé  et q pour la qualité.
-
+On commence par marquer les duplicats en utilisant [MarkDuplicates](https://gatk.broadinstitute.org/hc/en-us/articles/360037052812-MarkDuplicates-Picard-)
+On exclue ensuite les régions du genome mitochondrial et chloroplastique pour cela on utilise [grep](https://www.linuxtricks.fr/wiki/grep-afficher-les-lignes-correspondant-a-un-motif-donne).
+Ensuite on utilise [samtools](http://www.htslib.org/doc/samtools.html) qui permet d'enlever les reads non pairés, dupliqués, de mauvaise qualité, non mappés ou encore blacklistés.
 
 
 *Etape 8: Controle qualité après le filtering Script Qualite_post_filtering.sh
