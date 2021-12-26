@@ -107,47 +107,73 @@ Enfin, nous avons étudié la taille, la distrubiion et la périodicité des fra
 
 
 
+## Analyse des données
 
-*Etape 9: Determiner les peak Script peak_calling.sh
+### Détermination des piques - peak_calling.sh
 
-On commence par indexer les sequences
-on utilise la fonction masc2 callpeak pour déterminer les peaks 
-
-
-
-*Etape 10: Associer les peaks aux genes Script closest.sh
-
-Utiliser la fonction bedtools closest en faisant attention à ne pas prendre io dans les arguments. 
+La première étape de l'analyse des données consiste en la détermination des piques présent représentant les régions où le nombre de reads est le plus important c'est à dire les régions ouvertes présentes dans le génome. On commence par indexer les sequences puis
+on utilise la fonction [macs2](https://hbctraining.github.io/Intro-to-ChIPseq/lessons/05_peak_calling_macs.html) pour déterminer les différents piques en présence.
 
 
+### Association des piques trouvés avec les gènes d'A.Thaliana - closest.sh
 
-*Etape 11: Comparer la localisation des peaks Script comparaison_racine_cellule.sh
+A partir des données brute sur le gènome entier d'A.Thaliana, nous avons filtré les informations afin d'extraire uniquement les données sur les gènes présent dans les noyaux des cellules.
 
-On compare où sont la peak entre les racines entière et les cellules quiescentes et donc les zones d'accessibilité
-On prend en argument les données des cellules quescentes et celles des racines et on fait la différence entre les deux en utilisant la fonction bedtools intersect
-en donné on a les peaks qui sont uniquement présent chez les cellules quiescentes 
+Nous avons ensuite étudier la localisation des piques déterminé à l'étape précédante par rapport au génome d'A.Thaliana en utilisant la fonction bedtools closest. (attention à ne pas prendre io dans les arguments)
+Utiliser la fonction [bedtools closest](https://bedtools.readthedocs.io/en/latest/content/tools/closest.html) en faisant attention à ne pas prendre io dans les arguments. 
 
-Création d'un fichier avec tous les peaks uniques aux cellules quiescentes et le nombre de peak en commun chez les 3 échantillons.
-Utilisation de la fonction bedtools merge
-
+A partir des informations, nous avons donc accès aux gènes et régions régulatrices du génomes qui sont fortement accessible aux polymérases et facteurs de transcription et donc aux gènes jouant potentiellement un rôle important dans l'identité cellulaire.
 
 
-*Etape 12: Déterminer les peaks en commun chez plus de deux échantillons Script Commun_peak.R
+### Comparaison de la localisation des piques entre les cellules de racine et cellules quiescentes - comparaison_racine_celluule.sh
 
-On considère uniquement les données où les peaks sont présent au moins chez deux des trois échantillons. 
-Pour ce faire on utilise la fonction write table en prenant comme contrainte le fait que V5 doit être sup ou égale à 2
+On compare où sont la piques entre les racines entière et les cellules quiescentes et donc les zones d'accessibilité
+On prend en argument les données des cellules quescentes et celles des racines et on fait la différence entre les deux en utilisant la fonction [bedtools intersect](https://bedtools.readthedocs.io/en/latest/content/tools/intersect.html)
+En données on a les picques qui sont uniquement présent chez les cellules quiescentes 
 
-
-
-*Etape 13: Annotations des gènes où il y des peaks commun SCript distance_zero.R
-
-Pour cela on considère les gènes uniquement quand la distance du peak est de 0 par rapport à celle des gènes pour exclure les peaks des régions intergénique
-Pour cela on utilise bedtools closest pour déterminer la distance entre les gènes et les peaks dans les données où il y a des peaks dans au moins 2 échantillons. Puis on extraire UNIQUEMENT les peaks associés à des gènes avec une distance de zero en considerant write table et en prenant comme contrainte le fait que V11 doit être égale à 0
+Nous avons ensuite créer un fichier avec tous les picques uniques aux cellules quiescentes et le nombre de peak en commun chez les 3 échantillons.
+Pour faire cela, nous avons utiliser de la fonction [bedtools merge](https://bedtools.readthedocs.io/en/latest/content/tools/merge.html)
 
 
-*Etape 14: Analyse des proportions de chaque type de localisation Script analyse_proportion.R
+### Determiner les peaks en commun chez plus de deux échantillons - Commun_peak.R
 
-On analyse les proportions de chaque type: TSS, full overlap, inclusion, TES et no overlap. 
-pour ça au réalise une boucle if considerant la localisation possible des peaks en fonction du gène $
+On considère uniquement les données où les peaks sont présent au moins chez deux des trois échantillons de cellules quiescentes
+Pour ce faire on utilise la fonction [write table](https://www.rdocumentation.org/packages/utils/versions/3.6.2/topics/write.table) en prenant comme contrainte le fait que V5 (c'est à dire la colonne 5) doit être sup ou égale à 2 (ici égale à 2 ou à 3). 
 
-Une fois ces proportions établie; on réalise un graphique avec ggplot
+Cela permet de faire abstraction des piques uniquement présent dans un des échantillons et donc non signification d'un point de vu biologique.
+
+
+### Annotations des gènes où il y a des piques commun - distance_zero.R
+
+Pour cela on considère les gènes uniquement quand la distance du pique est de 0 par rapport à celle des gènes, cela permet d'exclure les piques des régions intergénique.
+
+La fonction bedtools closest est utilisée pour déterminer la distance entre les gènes et les piques dans les données où il y a des peaks dans au moins 2 échantillons (données précédement créées). Puis on extraire UNIQUEMENT les peaks associés à des gènes avec une distance de zero en considérant une nouvelle fois la fonction write table et en prenant comme contrainte le fait que V11 (colonne 11) doit être égale à 0.
+
+
+### Analyse des proportions de chaque type de localisation - analyse_proportion.R
+
+On analyse les proportions de chaque type de localisation possible des piques: présent sur le TSS, overlap totale du gène, inclusion au sein d'un gène, présent sur le TES et pas d'overlap du gène. 
+
+Pour cela au réalise une boucle if considerant la localisation possible des peaks en fonction du gène.
+
+Une fois ces proportions établie; on réalise un graphique avec [ggplot2](https://juba.github.io/tidyverse/08-ggplot2.html).
+
+
+
+## Conclusion biologique
+
+Ce traitement informatique permet de mettre en avant un ensemble de gène accessible uniquement dans les cellules quiescentes de la racine et non accessible dans les cellules différenciées des racines. 
+
+A partir de ces données, nous avons utilisé l'outil [IGV (Integrative Genomic Viewer)](https://igv.org/app/) afin de vérifier la présence des piques et leur localisation et l'orientation des gènes par rapport à cela. Cet outil permet juste un contrôle des informations fournies par l'étude informatique. 
+
+A partir des gènes mis en évidence comme accessible uniquement chez les cellules quiescentes, nous avons utilisé le [Gene Ontology Resource database](http://geneontology.org/) qui groupe les gènes que nous avons trouvé en différentes fonction. Nous avons alors comparé les gènes des cellules quiescentes avec celles des racines. A partir de cette étude nous n'avons pas pu mettre en avant clairement une sélection de fonction beaucoup plus importante chez les cellules quiescentes. Cela peut s'expliquer par une multitude de gènes responsable d'un même type de fonction. Il faudrait affiner notre recherche gène par gène à la recherche de meilleures conclusions. 
+
+Une autre partie du groupe de TP a réalisé une étude portant sur la comparaison de l'accessibilité du génome et a pu mettre en évidence que certains gènes sont plus exprimés chez les cellules différenciés tandis que d'autres le sont plus chez les cellules quiescentes. Ils ont pu prendre WOX5 comme exemple de gènes très exprimés chez les cellules quiescentes par rapport aux cellules de la racine.
+
+
+
+## Pour aller plus loin
+
+Comme dit précédement, il pourrait être intéressant d'étudier les différences entre les deux types celluaires gènes par gènes et non pas fonction par fonction afin de mettre en évidence des gènes largement plus accessible chez un type cellulaire par rapport à un autre. 
+
+D'autre part, il pourrait être intéressant de faire des catégories de cellules au sein de la racine car le fait de pooler ensemble toutes les cellules pourrait masquer des différences à certains niveaux.
