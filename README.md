@@ -1,4 +1,25 @@
-#README
+#README : projet Chromatin state of the organizing center of A. thaliana root meristem
+
+Floriane FOURNIER
+
+
+## Contexte biologique 
+
+Le développement des organismes multicellulaire passe par une differentiation des cellules souches en fonction de contraintes spaciales et temporelles. Dans ce projet, nous avons étudié cela chez la racine Arabidopsis Thaliana.
+
+La racine d'A.Thaliana présente 5 cellules quiescentes localisées dans le centre quiescent de la racine. C'est le pool de cellules indiférenciées de la racine qui peut possèder de ce fait un épigénome différent de celui de celui du reste des cellules de la racine.
+
+Le projet porte sur la détermination et la comparaison de l'épigénome des cellules différenciées de la racine et des cellules quiescentes de la racine afin d'étudier la différence d'accessibilité de certains gènes selon le type cellulaire considéré.
+
+
+## Protocole biologique
+
+Le fait que les cellules quiescentes soient en petit nombre dans la racine rend son étude difficile. Cela a été possible avec le développement des outils permettant le single-cell sur les végétaux. 
+
+Pour réaliser ces études, la méthode INTACT est utilisé ici. Cette méthode permet une extraction des noyaux des cellules d'intérêts qui seront dans notre cas GFP+ (car sous contrôle d'un promoteur WOX5).
+
+Une fois extrait, les noyaux sont séquencés en utilisant la méthode de l'ATAC-seq. Cette méthode implique la présence d'une transposase qui vient cliver le génome dans les régions les plus accessibles. 
+
 
 *Etape 1: Téléchargement des données / Script téléchargement.R
 
@@ -108,3 +129,11 @@ Pour ce faire on utilise la fonction write table en prenant comme contrainte le 
 
 Pour cela on considère les gènes uniquement quand la distance du peak est de 0 par rapport à celle des gènes pour exclure les peaks des régions intergénique
 Pour cela on utilise bedtools closest pour déterminer la distance entre les gènes et les peaks dans les données où il y a des peaks dans au moins 2 échantillons. Puis on extraire UNIQUEMENT les peaks associés à des gènes avec une distance de zero en considerant write table et en prenant comme contrainte le fait que V11 doit être égale à 0
+
+
+*Etape 14: Analyse des proportions de chaque type de localisation Script analyse_proportion.R
+
+On analyse les proportions de chaque type: TSS, full overlap, inclusion, TES et no overlap. 
+pour ça au réalise une boucle if considerant la localisation possible des peaks en fonction du gène $
+
+Une fois ces proportions établie; on réalise un graphique avec ggplot

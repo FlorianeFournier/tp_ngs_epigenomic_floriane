@@ -1,12 +1,13 @@
 #création d'un fichier avec bedtool closest pour avoir la distance entre les gènes et le peak
 
-gtf=/home/rstudio/mydatalocal/Arabidocontratac/TAIR10/Arabidopsis_thaliana.TAIR10.51.gtf
-gtf_filtered=${gtf/.gtf/.filtered.gtf}
-AnnotationsDir=/home/rstudio/mydatalocal/tp_ngs_floriane/Annotations
+gtf_filtered=/home/rstudio/mydatalocal/Arabidocontratac/TAIR10/Arabidopsis_thaliana.TAIR10.51.filtered.gtf
 
-grep -v "^[MtPt]" ${gtf} | awk '{ if ($3=="gene") print $0 }' |\
-awk ' BEGIN { FS=OFS="\t" } { split($9,a,";") ; match(a[1], /AT[0-9]G[0-9]+/) ; id=substr(a[1],RSTART,RLENGTH) ; print $1,$4,$5,id,$7 }' |\
-sort -k1,1 -k2,2n > ${gtf_filtered}
+#gtf_filtered=${gtf/.gtf/.filtered.gtf}
+#AnnotationsDir=/home/rstudio/mydatalocal/tp_ngs_floriane/Annotations
+
+#grep -v "^[MtPt]" ${gtf} | awk '{ if ($3=="gene") print $0 }' |\
+#awk ' BEGIN { FS=OFS="\t" } { split($9,a,";") ; match(a[1], /AT[0-9]G[0-9]+/) ; id=substr(a[1],RSTART,RLENGTH) ; print $1,$4,$5,id,$7 }' |\
+#sort -k1,1 -k2,2n > ${gtf_filtered}
 
 for f in ${AnnotationsDir}/*quiescentcells.unique.common.peaks.treated.txt
 do
