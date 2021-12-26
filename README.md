@@ -81,7 +81,7 @@ En sorti on a un fichier sam que l'on va compresser ensuite en un fichier bam. P
 On considère qu'un aligement est de bonne qualité à partir de 80% de mapping. Ici nous sommes au dessus de 90%, ce qui nous permet de continuer notre traitement des données l'esprit tranquille quand à la qualité des reads.
 
 
-###Filtration et selection des reads issues du mapping - Filtering.sh
+### Filtration et selection des reads issues du mapping - Filtering.sh
 
 Le filtering permet d'enlever le genome non chromosomique, les reads qui n'ont pas mapper, les reads de mauvaise qualité de mapping, les régions blacklistés et les reads dupliqués. C'est à dire que l'on enlève les reads qui n'ont pas mappés à l'étape précédente.
 
@@ -90,17 +90,20 @@ On exclue ensuite les régions du genome mitochondrial et chloroplastique pour c
 Ensuite on utilise [samtools](http://www.htslib.org/doc/samtools.html) qui permet d'enlever les reads non pairés, dupliqués, de mauvaise qualité, non mappés ou encore blacklistés.
 
 
-*Etape 8: Controle qualité après le filtering Script Qualite_post_filtering.sh
 
+## Contrôle de la qualité après les étapes de traitement - Qualite_post_filtering.sh
 
-On commence à changer les valeurs des variables 
-On définit ensuite les régions d'intérêt, pour cela, creation d'un fichier avec tous les intervals de 1000 autour de TSS, définition des TSS enlever mitochondrie + chroloplaste, garder les genes codant pour des proteines et extraire l'index du premier caractère et du dernier caractère du gene, une fois que l'on a extrait le nom, on regarde le sens du gène. on définit enfin les intersections entre les régions d'intérêt et les TSS
+Pour réaliser le contrôle, nous avons utilisé le génome d'A.thaliana annoté, précédement utilisé, où est présenté les informations suivantes: chromosome, gene/transcrit/transposon, coordonnées, gene_id, role du gene.
 
-On détermine ensuite les coordonnées dans la séquence et les read qui match
+Nous avons commencé par récupérer les différents TSS présent sur le génome à l'aide des fonctions [bedtools](https://bedtools.readthedocs.io/en/latest/) et [grep](https://www.linuxtricks.fr/wiki/grep-afficher-les-lignes-correspondant-a-un-motif-donne)
 
-On calcul la distance entre deux reads
+Nous avons fait l'étude uniquement sur les fragement de génome ayant passer les tests de traitement avec succés.
 
-On refais la même chose pour les jeux de données que l'on a 
+A partir des régions d'intéret que l'on a définit, nous avons étudier ces fragments et leur localisation par rapport aux différents TSS. Pour faire cela, nous avons utilisé la fonction bedtools. 
+
+On détermine ensuite les coordonnées dans la séquence et les read qui match avec. 
+
+Enfin, nous avons étudié la taille, la distrubiion et la périodicité des fragments à l'aide de la fonction samtools views. Ces paramètres dépendent de la localisation des nucléosomes sur le génome.
 
 
 
