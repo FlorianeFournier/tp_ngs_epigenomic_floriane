@@ -181,5 +181,5 @@ D'autre part, il pourrait être intéressant de faire des catégories de cellule
 
 ## Crédits et remerciement
 
-Je remercie déjà mes partenaires de TP : Emilie, Lucie, Ewen et Jeremie pour leur patience et leur bonne humeur, ma machine virtuelle pour avoir si souvent décidé de planter et nos encadrant de TP Alice (<3), Marine, Carine et Romain. 
+Je remercie déjà mes partenaires de TP : Emilie, Lucie, Ewen et Jeremie pour leur patience et leur bonne humeur, ma machine virtuelle pour avoir si souvent décidé de planter et nos encadrants de TP Alice (<3), Marine, Carine et Romain. 
 
