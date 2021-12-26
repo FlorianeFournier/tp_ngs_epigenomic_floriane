@@ -24,16 +24,13 @@ Ces données permettent d'avoir une représentation de l'accessibilité de l'ens
 
 
 
-## Téléchargement des données de séquençage - tel
+## Téléchargement des données de séquençage - Telechargement.sh
 
+La première étape consiste a télécharger les données de séquençage: racines entières et centres quiescents non publiés mais également des données provenant d'une publication [Combining ATAC-seq with nuclei sorting for discovery of cis-regulatory regions in plant genomes](https://academic.oup.com/nar/article/45/6/e41/2605943). 
 
+Pour télécharger les fichiers brut non publiés, il nous avons utiliser wget selon la forme : wget --user'' password'' adresse. Pour télécharger les fichiers issues de la publication, nous avons utiliser la fonction fastq-dump avec la commande fastq-dump --split-files Nom du fichier
 
-
-Etape 1: Téléchargement des données / Script téléchargement.R
-
-Pour télécharger les fichiers brut : Utilisation de wget selon la forme : wget --user'' password'' adress
-
-Pour télécharger les fichiers issues d'une publication : Utilisation de la fonction fastq-dump avec la commande fastq-dump --split-files Nom du fichier
+Enfin les données sur le génome d'A.Thaliana sont télécharger à partir d'une base de donnée sous le format TAIR grâce à la fonction wget.
 
 Mettre ensuite les données dans le dossier Data (correspondant aux datas brutes): Pour cela on utilise la fonction mv tel que mv quelque chose Data/ On peut pour targeter le quelque chose utiliser *chaine de caractère en commun* 
 
