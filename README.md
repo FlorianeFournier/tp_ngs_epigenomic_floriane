@@ -1,4 +1,4 @@
-#README : projet Chromatin state of the organizing center of A. thaliana root meristem
+# README : projet Chromatin state of the organizing center of A. thaliana root meristem
 
 Floriane FOURNIER
 
@@ -20,8 +20,16 @@ Pour réaliser ces études, la méthode INTACT est utilisé ici. Cette méthode 
 
 Une fois extrait, les noyaux sont séquencés en utilisant la méthode de l'ATAC-seq. Cette méthode implique la présence d'une transposase qui vient cliver le génome dans les régions les plus accessibles. 
 
+Ces données permettent d'avoir une représentation de l'accessibilité de l'ensemble du génomes. 
 
-*Etape 1: Téléchargement des données / Script téléchargement.R
+
+
+## Téléchargement des données de séquençage - tel
+
+
+
+
+Etape 1: Téléchargement des données / Script téléchargement.R
 
 Pour télécharger les fichiers brut : Utilisation de wget selon la forme : wget --user'' password'' adress
 
