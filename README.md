@@ -43,7 +43,7 @@ Enfin on peut deziper nos données fastq pour cela on utilise la fonction [gunzi
 
 ## Traitement des données
 
-# Etude de la qualité des reads - analyse.qualite.sh
+### Etude de la qualité des reads - analyse.qualite.sh
 
 Nous avons commencé par analyser la qualité des données brutes. Les données brutes sont sous le format FastQ. Ainsi, la localisation de chaque nucléotide est traduit par une caractère représentant sa qualité. Meilleur la qualité du nucléotide est, plus sa nature est sur.
 
@@ -54,7 +54,7 @@ Les résultats de fastqc sont ensuite compilée. Pour cela, nous avons utilisé 
 La fonction multiqc renvoie de multiple graphique traduisant la qualité des reads en présence. Ces graphiques traduisent: les statistiques générales, la proportion de reads unique, des histogram de qualité, les scores de qualité de la séquence, le composition en base des séquences, le pourcentage de CG dans la séquence ou encore le niveau de duplication des séquences.
 
 
-# Ellagage des données - Trimming.sh et analyse de la qualité ensuite - analyse_qualite.sh
+### Ellagage des données - Trimming.sh et analyse de la qualité ensuite - analyse_qualite.sh
 
 Le processus de trimming permet d'enlever des données les séquences de mauvaises qualités ainsi que les séquences des adaptateurs et les duplicats.
 
@@ -65,7 +65,7 @@ A partir des données de fastq, nous avons bouclé sur l'ensemble des données a
 On refait la même analyse qualité que à l'étape précédante mais cette fois ci à partir des données trimmer. 
 
 
-# Aligement des reads sur le génome de référence - Mapping.sh
+### Aligement des reads sur le génome de référence - Mapping.sh
 
 On réalise un mapping qui consiste à comparer les reads avec le genomes de référence pour regarder où sont localisé les reads.
 
@@ -81,7 +81,7 @@ En sorti on a un fichier sam que l'on va compresser ensuite en un fichier bam. P
 On considère qu'un aligement est de bonne qualité à partir de 80% de mapping. Ici nous sommes au dessus de 90%, ce qui nous permet de continuer notre traitement des données l'esprit tranquille quand à la qualité des reads.
 
 
-# Filtration et selection des reads issues du mapping - Filtering.sh
+###Filtration et selection des reads issues du mapping - Filtering.sh
 
 Le filtering permet d'enlever le genome non chromosomique, les reads qui n'ont pas mapper, les reads de mauvaise qualité de mapping, les régions blacklistés et les reads dupliqués. C'est à dire que l'on enlève les reads qui n'ont pas mappés à l'étape précédente.
 
