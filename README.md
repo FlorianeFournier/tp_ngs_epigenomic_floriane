@@ -177,3 +177,9 @@ Une autre partie du groupe de TP a réalisé une étude portant sur la comparais
 Comme dit précédement, il pourrait être intéressant d'étudier les différences entre les deux types celluaires gènes par gènes et non pas fonction par fonction afin de mettre en évidence des gènes largement plus accessible chez un type cellulaire par rapport à un autre. 
 
 D'autre part, il pourrait être intéressant de faire des catégories de cellules au sein de la racine car le fait de pooler ensemble toutes les cellules pourrait masquer des différences à certains niveaux.
+
+
+## Crédits et remerciement
+
+Je remercie déjà mes partenaires de TP : Emilie, Lucie, Ewen et Jeremie pour leur patience et leur bonne humeur, ma machine virtuelle pour avoir si souvent décidé de planter et nos encadrant de TP Alice (<3), Marine, Carine et Romain. 
+
